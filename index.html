@@ -4,10 +4,8 @@
     <meta charset="utf-8">
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>API Reference</title>
+    <title>Checkbox Web Services</title>
 
-    <link href="stylesheets/screen.css" rel="stylesheet" media="screen" />
-    <link href="stylesheets/print.css" rel="stylesheet" media="print" />
     <style>
       .highlight table td { padding: 5px; }
 .highlight table pre { margin: 0; }
@@ -88,10 +86,12 @@
   color: #90a959;
 }
     </style>
+    <link href="stylesheets/screen.css" rel="stylesheet" media="screen" />
+    <link href="stylesheets/print.css" rel="stylesheet" media="print" />
       <script src="javascripts/all.js"></script>
   </head>
 
-  <body class="index" data-languages="[&quot;shell&quot;,&quot;ruby&quot;,&quot;python&quot;]">
+  <body class="index" data-languages="[&quot;csharp&quot;,&quot;vb&quot;]">
     <a href="#" id="nav-button">
       <span>
         NAV
@@ -101,9 +101,8 @@
     <div class="tocify-wrapper">
       <img src="images/logo.png" />
         <div class="lang-selector">
-              <a href="#" data-language-name="shell">shell</a>
-              <a href="#" data-language-name="ruby">ruby</a>
-              <a href="#" data-language-name="python">python</a>
+              <a href="#" data-language-name="csharp">C#</a>
+              <a href="#" data-language-name="vb">Visual Basic</a>
         </div>
         <div class="search">
           <input type="text" class="search" id="input-search" placeholder="Search">
@@ -112,7 +111,6 @@
       <div id="toc">
       </div>
         <ul class="toc-footer">
-            <li><a href='#'>Sign Up for a Developer Key</a></li>
             <li><a href='https://github.com/tripit/slate'>Documentation Powered by Slate</a></li>
         </ul>
     </div>
@@ -121,226 +119,374 @@
       <div class="content">
         <h1 id="introduction">Introduction</h1>
 
-<p>Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.</p>
+<p>Welcome to the Checkbox Web Services documentation page. Here you will find some basic documentation for some of our most used API methods as well as some shot code snippets which demonstrate how to utilize the method in actual code. </p>
 
-<p>We have language bindings in Shell, Ruby, and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.</p>
+<p>For ease of use this documentation should always reflect the most recent version of our Checkbox Online platform, which is currently at Checkbox 6 - 2016 Q1. If you are currently on an older version of Checkbox some or all of the documentation or examples here may not reflect your installation. </p>
 
-<p>This example API documentation page was created with <a href="https://github.com/tripit/slate">Slate</a>. Feel free to edit it and use it as a base for your own API&rsquo;s documentation.</p>
+<p>If you have any issues with the documentation or need any further assistance please feel free to submit a support ticket here : <a href="https://www.checkbox.com/support">Checkbox Support</a></p>
+
+<h1 id="getting-started">Getting Started</h1>
+
+<h2 id="api-information">API Information</h2>
+
+<p>Checkbox 6 Web Services are built with the Windows Communication Foundation (WCF). We recommend building your application using the latest version of the .NET Framework (version 4.6 at the time of this document’s release) in order to take advantage of improvements in the WCF stack.</p>
+
+<p>Each of our Web Services have a Web Services Description Language (WSDL), which informs the client how to communicate with the service. This means that the services may be accessed using a number of different clients (environments and languages, i.e. Java). It is up to you, the developer, to reference the Web Services appropriately. In the documentation on this website all services should have the endpoint to utilize referenced at the bottom of the section.</p>
+
+<h2 id="checking-if-the-api-is-live">Checking if the API is Live</h2>
+
+<p>The first thing you will want to do is ensure that your Web Services are installed correctly and can be accessed by your application. The easiest way to do that is to type a service’s URL into a web browser.</p>
+
+<p>Let’s take a look at the User Management Service by visiting the following URL: </p>
+
+<p>http://[CHECKBOX URL]/Services/UserManagementService.svc</p>
+
+<aside class="notice">
+You must replace <code>[yourdomain]</code> with the domain of your Checkbox installation.
+</aside>
+
+<h2 id="adding-a-service-reference">Adding a Service Reference</h2>
+
+<blockquote>
+<p>Consuming the client</p>
+</blockquote>
+<pre class="highlight csharp"><code><span class="n">var</span> <span class="n">proxy</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">UserManagementServiceClient</span><span class="p">();</span>
+<span class="n">var</span> <span class="n">result</span> <span class="p">=</span> <span class="n">proxy</span><span class="p">.</span><span class="nf">GetUsersInRole</span><span class="p">(</span><span class="n">authenticationToken</span><span class="p">,</span><span class="n">role</span><span class="p">,</span><span class="n">pageNumber</span><span class="p">,</span>
+    <span class="n">pageSize</span><span class="p">,</span><span class="n">sortField</span><span class="p">,</span><span class="n">sortAscending</span><span class="p">,</span><span class="n">filterField</span><span class="p">,</span><span class="n">filterValue</span><span class="p">);</span>
+
+<span class="c1">// Handle errors
+</span><span class="k">if</span> <span class="p">(!</span><span class="n">result</span><span class="p">.</span><span class="n">CallSuccess</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="n">result</span><span class="p">.</span><span class="n">FailureMessage</span><span class="p">);</span>
+    <span class="k">return</span> <span class="k">null</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">return</span> <span class="n">result</span><span class="p">.</span><span class="n">ResultData</span><span class="p">.</span><span class="n">ResultPage</span><span class="p">;</span>
+</code></pre>
+<pre class="highlight vb"><code>
+<span class="n">Unfortunately</span> <span class="n">an</span> <span class="n">example</span> <span class="n">in</span> <span class="n">Visual</span> <span class="n">Basic</span> <span class="n">is</span> <span class="n">not</span> <span class="n">complete</span> <span class="n">for</span> <span class="n">this</span> <span class="n">section</span>
+</code></pre>
+
+<p>Note: we are using C# and Visual Studio 2010 for this example, but you may use whatever environment or language you would like.</p>
+
+<ol>
+<li>Create a new project or open an existing one</li>
+<li>Right click the “References” folder</li>
+<li>Find and select “Add Service Reference” (for .NET Framework 3.0 and up) or “Add Web Reference” (for .NET Framework 2.0 and 1.1).</li>
+<li>Enter the address for the service you want to use</li>
+<li>Click “Go”</li>
+<li>Select the contract you want to use</li>
+<li>Enter a name for the proxy class that will be created</li>
+<li>Click “OK”</li>
+</ol>
 
 <h1 id="authentication">Authentication</h1>
 
-<blockquote>
-<p>To authorize, use this code:</p>
-</blockquote>
-<pre class="highlight ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
+<p>The Checkbox API requires an authentication token (AuthToken) in order to make API calls. In order to obtain an AuthToken you can access the AuthenticationService.Login method using your username and password. AuthTokens are on a rolling 20 minute expiration timer. This means that your token will last for 20 minutes after the last API call was made utilizing it.</p>
 
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-</code></pre>
-<pre class="highlight python"><code><span class="kn">import</span> <span class="nn">kittn</span>
+<p>AuthTokens inherit the permissions of the user that they were obtained for. This means that you will be able to access all data using this token that you would if you were logged into the application as them. </p>
 
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-</code></pre>
-<pre class="highlight shell"><code><span class="c"># With shell, you can just pass the correct header with each request</span>
-curl <span class="s2">"api_endpoint_here"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre>
-
-<blockquote>
-<p>Make sure to replace <code class="prettyprint">meowmeowmeow</code> with your API key.</p>
-</blockquote>
-
-<p>Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our <a href="http://example.com/developers">developer portal</a>.</p>
-
-<p>Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:</p>
-
-<p><code class="prettyprint">Authorization: meowmeowmeow</code></p>
+<p><code class="prettyprint">Authentication Endpoint: https://[yourdomain]/services/authenticationservice.svc</code></p>
 
 <aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
+You must replace <code>[yourdomain]</code> with the domain of your Checkbox installation.
 </aside>
 
-<h1 id="kittens">Kittens</h1>
+<h2 id="login">Login</h2>
 
-<h2 id="get-all-kittens">Get All Kittens</h2>
-<pre class="highlight ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
+<p>The login method will take the username and password supplied, and if valid, return an authtoken. This authtoken will expire after 20 minutes of not being utilized, or if a new authtoken is requested for the user. </p>
 
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">get</span>
+<p>The authtoken assumes all permissions of the user that was authenticated in order to retrieve it.</p>
+
+<blockquote>
+<p>Example Request</p>
+</blockquote>
+<pre class="highlight csharp"><code><span class="k">class</span> <span class="nc">Test</span>
+<span class="p">{</span>
+    <span class="k">static</span> <span class="k">void</span> <span class="nf">Main</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">AuthenticationServiceClient</span> <span class="n">client</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">AuthenticationServiceClient</span><span class="p">();</span>
+
+        <span class="n">authToken</span> <span class="p">=</span> <span class="n">client</span><span class="p">.</span><span class="nf">Login</span><span class="p">(</span><span class="s">"admin"</span><span class="p">,</span> <span class="s">"password"</span><span class="p">).</span><span class="n">ResultData</span><span class="p">;</span>
+
+        <span class="c1">// Always close the client.
+</span>        <span class="n">client</span><span class="p">.</span><span class="nf">Close</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
 </code></pre>
-<pre class="highlight python"><code><span class="kn">import</span> <span class="nn">kittn</span>
+<pre class="highlight vb"><code><span class="k">Class</span> <span class="nc">Test</span>
+    <span class="k">Shared</span> <span class="k">Sub</span> <span class="nf">Main</span><span class="p">()</span>
+        <span class="k">Dim</span> <span class="nv">client</span> <span class="ow">As</span> <span class="n">AuthenticationServiceClient</span> <span class="o">=</span> <span class="k">New</span> <span class="n">AuthenticationServiceClient</span><span class="p">()</span>
 
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="o">.</span><span class="n">kittens</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
-</code></pre>
-<pre class="highlight shell"><code>curl <span class="s2">"http://example.com/api/kittens"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
+        <span class="k">Dim</span> <span class="nv">authToken</span> <span class="n">as</span> <span class="n">string</span> <span class="o">=</span> <span class="n">client</span><span class="p">.</span><span class="n">Login</span><span class="p">(</span><span class="s">"admin"</span><span class="p">,</span> <span class="s">"password"</span><span class="p">).</span><span class="n">ResultData</span>
+
+        <span class="c1">'Always close the client</span>
+        <span class="n">client</span><span class="p">.</span><span class="n">Close</span><span class="p">()</span>
+    <span class="k">End</span> <span class="k">Sub</span>
+<span class="k">End</span> <span class="k">Class</span>
 </code></pre>
 
 <blockquote>
-<p>The above command returns JSON structured like this:</p>
+<p>Example Response</p>
 </blockquote>
-<pre class="highlight json"><code><span class="p">[</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Fluffums"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"calico"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Max"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unknown"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span><span class="p">]</span><span class="w">
-</span></code></pre>
+<pre class="highlight xml"><code><span class="nt">&lt;s:Envelope</span> <span class="na">xmlns:s=</span><span class="s">"http://schemas.xmlsoap.org/soap/envelope/"</span><span class="nt">&gt;</span>
+   <span class="nt">&lt;s:Body&gt;</span>
+      <span class="nt">&lt;LoginResponse</span> <span class="na">xmlns=</span><span class="s">"http://tempuri.org/"</span><span class="nt">&gt;</span>
+         <span class="nt">&lt;LoginResult</span> <span class="na">xmlns:a=</span><span class="s">"http://schemas.datacontract.org/2004/07/Checkbox.Wcf.Services.Proxies"</span>
+         <span class="na">xmlns:i=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;a:CallSuccess&gt;</span>true<span class="nt">&lt;/a:CallSuccess&gt;</span>
+            <span class="nt">&lt;a:FailureExceptionType</span> <span class="na">i:nil=</span><span class="s">"true"</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;a:FailureMessage</span> <span class="na">i:nil=</span><span class="s">"true"</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;a:ResultData&gt;</span>d6ffaabe-e9b1-4922-a18f-a9dc1e3a6342<span class="nt">&lt;/a:ResultData&gt;</span>
+         <span class="nt">&lt;/LoginResult&gt;</span>
+      <span class="nt">&lt;/LoginResponse&gt;</span>
+   <span class="nt">&lt;/s:Body&gt;</span>
+<span class="nt">&lt;/s:Envelope&gt;</span>
 
-<p>This endpoint retrieves all kittens.</p>
+</code></pre>
 
-<h3 id="http-request">HTTP Request</h3>
-
-<p><code class="prettyprint">GET http://example.com/api/kittens</code></p>
-
-<h3 id="query-parameters">Query Parameters</h3>
+<h3 id="input-parameters">Input Parameters</h3>
 
 <table><thead>
 <tr>
 <th>Parameter</th>
-<th>Default</th>
+<th>Type</th>
 <th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
-<td>include_cats</td>
-<td>false</td>
-<td>If set to true, the result will also include cats.</td>
+<td>username</td>
+<td>string</td>
+<td>Username to obtain the authToken on behalf of</td>
 </tr>
 <tr>
-<td>available</td>
-<td>true</td>
-<td>If set to false, the result will include kittens that have already been adopted.</td>
+<td>password</td>
+<td>string</td>
+<td>Password used to authenticate the username supplied</td>
 </tr>
 </tbody></table>
 
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
+<h1 id="response-data">Response Data</h1>
+
+<p>The following service allows you to get response data from for your surveys in different formats, and with different filtering options. </p>
+
+<p>In order to utilize this service you will need an AuthToken from the authentication service, and you will need access to the responses within the Checkbox application. </p>
+
+<p><code class="prettyprint">Response Data Endpoint: https://[yourdomain]/services/responsedatanservice.svc</code></p>
+
+<aside class="notice">
+You must replace <code>[yourdomain]</code> with the domain of your Checkbox installation.
 </aside>
 
-<h2 id="get-a-specific-kitten">Get a Specific Kitten</h2>
-<pre class="highlight ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
+<h2 id="exportresponsestabular">ExportResponsesTabular</h2>
 
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre>
-<pre class="highlight python"><code><span class="kn">import</span> <span class="nn">kittn</span>
+<p>The ExportReponsesTabular method will return filtered or unfiltered response data in the format of an IENumerable SimpleNameValueCollection format which is easy to write to CSV files or insert into databases. The Name will always be the question or property, and the value will always be the answer or value or the field. </p>
 
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="o">.</span><span class="n">kittens</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<blockquote>
+<p>Example Request</p>
+</blockquote>
+<pre class="highlight csharp"><code><span class="k">class</span> <span class="nc">Test</span>
+<span class="p">{</span>
+    <span class="k">static</span> <span class="k">void</span> <span class="nf">Main</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">ResponseDataServiceClient</span> <span class="n">client</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">ResponseDataServiceClient</span><span class="p">();</span>
+
+        <span class="c1">// Use the 'client' variable to call operations on the service.
+</span>        <span class="n">var</span> <span class="n">responseData</span> <span class="p">=</span> <span class="n">client</span><span class="p">.</span><span class="nf">ExportResponsesTabular</span><span class="p">(</span><span class="s">"e2e8c988-996a"</span><span class="p">,</span> <span class="m">1001</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="s">"UniqueIdentifier"</span><span class="p">,</span> <span class="s">"admin"</span><span class="p">,</span> <span class="k">null</span><span class="p">,</span>
+        <span class="k">true</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="s">"2016-01-01"</span><span class="p">,</span> <span class="s">"2017-01-01"</span><span class="p">,</span><span class="k">false</span><span class="p">,</span> <span class="k">false</span><span class="p">,</span> <span class="k">false</span><span class="p">,</span> <span class="k">false</span><span class="p">,</span><span class="k">false</span><span class="p">,</span> <span class="k">false</span><span class="p">,</span> <span class="k">false</span><span class="p">,</span><span class="k">false</span><span class="p">,</span> <span class="k">false</span><span class="p">,</span> <span class="k">false</span><span class="p">);</span>
+
+        <span class="c1">// Always close the client.
+</span>        <span class="n">client</span><span class="p">.</span><span class="nf">Close</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
 </code></pre>
-<pre class="highlight shell"><code>curl <span class="s2">"http://example.com/api/kittens/2"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
+<pre class="highlight vb"><code><span class="k">Class</span> <span class="nc">Test</span>
+    <span class="k">Shared</span> <span class="k">Sub</span> <span class="nf">Main</span><span class="p">()</span>
+        <span class="k">Dim</span> <span class="nv">client</span> <span class="ow">As</span> <span class="n">ResponseDataServiceClient</span> <span class="o">=</span> <span class="k">New</span> <span class="n">ResponseDataServiceClient</span><span class="p">()</span>
+        <span class="c1">' Use the 'client' variable to call operations on the service.</span>
+
+        <span class="k">Dim</span> <span class="nv">responseData</span> <span class="n">as</span> <span class="n">IEnumerable</span><span class="o">&lt;</span><span class="n">SimpleNameValueCollection</span><span class="o">&gt;</span> <span class="o">=</span>
+        <span class="n">client</span><span class="p">.</span><span class="n">ExportResponsesTabular</span><span class="p">(</span><span class="s">"e2e8c988-996a"</span><span class="p">,</span> <span class="mi">1001</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s">"UniqueIdentifier"</span><span class="p">,</span> <span class="s">"admin"</span><span class="p">,</span> <span class="n">null</span><span class="p">,</span>
+        <span class="n">true</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s">"2016-01-01"</span><span class="p">,</span> <span class="s">"2017-01-01"</span><span class="p">,</span><span class="n">false</span><span class="p">,</span> <span class="n">false</span><span class="p">,</span> <span class="n">false</span><span class="p">,</span> <span class="n">false</span><span class="p">,</span><span class="n">false</span><span class="p">,</span> <span class="n">false</span><span class="p">,</span> <span class="n">false</span><span class="p">,</span><span class="n">false</span><span class="p">,</span> <span class="n">false</span><span class="p">,</span> <span class="n">false</span><span class="p">)</span>
+
+        <span class="c1">' Always close the client.</span>
+        <span class="n">client</span><span class="p">.</span><span class="n">Close</span><span class="p">()</span>
+    <span class="k">End</span> <span class="k">Sub</span>
+<span class="k">End</span> <span class="k">Class</span>
 </code></pre>
 
 <blockquote>
-<p>The above command returns JSON structured like this:</p>
+<p>Example Response</p>
 </blockquote>
-<pre class="highlight json"><code><span class="p">{</span><span class="w">
-  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Max"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unknown"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
+<pre class="highlight xml"><code><span class="nt">&lt;s:Envelope</span> <span class="na">xmlns:s=</span><span class="s">"http://schemas.xmlsoap.org/soap/envelope/"</span><span class="nt">&gt;</span>
+   <span class="nt">&lt;s:Body&gt;</span>
+      <span class="nt">&lt;ExportResponsesTabularResponse</span> <span class="na">xmlns=</span><span class="s">"http://tempuri.org/"</span><span class="nt">&gt;</span>
+         <span class="nt">&lt;ExportResponsesTabularResult</span> <span class="na">xmlns:a=</span><span class="s">"http://schemas.datacontract.org/2004/07/Checkbox.Wcf.Services.Proxies"</span> <span class="na">xmlns:i=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;a:CallSuccess&gt;</span>true<span class="nt">&lt;/a:CallSuccess&gt;</span>
+            <span class="nt">&lt;a:FailureExceptionType</span> <span class="na">i:nil=</span><span class="s">"true"</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;a:FailureMessage</span> <span class="na">i:nil=</span><span class="s">"true"</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;a:ResultData&gt;</span>
+               <span class="nt">&lt;a:ResultPage&gt;</span>
+                  <span class="nt">&lt;a:Respondents</span> <span class="na">i:nil=</span><span class="s">"true"</span><span class="nt">/&gt;</span>
+                  <span class="nt">&lt;a:Responses&gt;</span>
+                     <span class="nt">&lt;a:SimpleNameValueCollection&gt;</span>
+                        <span class="nt">&lt;a:NameValueList&gt;</span>
+                           <span class="nt">&lt;a:SimpleNameValue&gt;</span>
+                              <span class="nt">&lt;a:Name&gt;</span>Id<span class="nt">&lt;/a:Name&gt;</span>
+                              <span class="nt">&lt;a:Value&gt;</span>4393<span class="nt">&lt;/a:Value&gt;</span>
+                           <span class="nt">&lt;/a:SimpleNameValue&gt;</span>
+                           <span class="nt">&lt;a:SimpleNameValue&gt;</span>
+                              <span class="nt">&lt;a:Name&gt;</span>What is your favorite color?<span class="nt">&lt;/a:Name&gt;</span>
+                              <span class="nt">&lt;a:Value&gt;</span>Blue<span class="nt">&lt;/a:Value&gt;</span>
+                           <span class="nt">&lt;/a:SimpleNameValue&gt;</span>
+                        <span class="nt">&lt;/a:NameValueList&gt;</span>
+                     <span class="nt">&lt;/a:SimpleNameValueCollection&gt;</span>
+                     <span class="nt">&lt;a:SimpleNameValueCollection&gt;</span>
+                        <span class="nt">&lt;a:NameValueList&gt;</span>
+                           <span class="nt">&lt;a:SimpleNameValue&gt;</span>
+                              <span class="nt">&lt;a:Name&gt;</span>Id<span class="nt">&lt;/a:Name&gt;</span>
+                              <span class="nt">&lt;a:Value&gt;</span>4394<span class="nt">&lt;/a:Value&gt;</span>
+                           <span class="nt">&lt;/a:SimpleNameValue&gt;</span>
+                           <span class="nt">&lt;a:SimpleNameValue&gt;</span>
+                              <span class="nt">&lt;a:Name&gt;</span>What is your favorite color?<span class="nt">&lt;/a:Name&gt;</span>
+                              <span class="nt">&lt;a:Value&gt;</span>Green<span class="nt">&lt;/a:Value&gt;</span>
+                           <span class="nt">&lt;/a:SimpleNameValue&gt;</span>
+                        <span class="nt">&lt;/a:NameValueList&gt;</span>
+                     <span class="nt">&lt;/a:SimpleNameValueCollection&gt;</span>
+                  <span class="nt">&lt;/a:Responses&gt;</span>
+               <span class="nt">&lt;/a:ResultPage&gt;</span>
+               <span class="nt">&lt;a:TotalItemCount&gt;</span>2<span class="nt">&lt;/a:TotalItemCount&gt;</span>
+            <span class="nt">&lt;/a:ResultData&gt;</span>
+         <span class="nt">&lt;/ExportResponsesTabularResult&gt;</span>
+      <span class="nt">&lt;/ExportResponsesTabularResponse&gt;</span>
+   <span class="nt">&lt;/s:Body&gt;</span>
+<span class="nt">&lt;/s:Envelope&gt;</span>
 
-<p>This endpoint retrieves a specific kitten.</p>
+</code></pre>
 
-<aside class="warning">Inside HTML code blocks like this one, you can&rsquo;t use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
-
-<h3 id="http-request">HTTP Request</h3>
-
-<p><code class="prettyprint">GET http://example.com/kittens/&lt;ID&gt;</code></p>
-
-<h3 id="url-parameters">URL Parameters</h3>
+<h3 id="input-parameters">Input Parameters</h3>
 
 <table><thead>
 <tr>
 <th>Parameter</th>
+<th>Type</th>
 <th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
-<td>ID</td>
-<td>The ID of the kitten to retrieve</td>
-</tr>
-</tbody></table>
-
-          <h1 id="errors">Errors</h1>
-
-<aside class="notice">This error section is stored in a separate file in `includes/_errors.md`. Slate allows you to optionally separate out your docs into many files&hellip;just save them to the `includes` folder and add them to the top of your `index.md`&rsquo;s frontmatter. Files are included in the order listed.</aside>
-
-<p>The Kittn API uses the following error codes:</p>
-
-<table><thead>
-<tr>
-<th>Error Code</th>
-<th>Meaning</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>400</td>
-<td>Bad Request &ndash; Your request sucks</td>
+<td>authToken</td>
+<td>string</td>
+<td>Authentication token to validate permission over the data requested</td>
 </tr>
 <tr>
-<td>401</td>
-<td>Unauthorized &ndash; Your API key is wrong</td>
+<td>surveyId</td>
+<td>int</td>
+<td>Survey Identifier this is either a 4 or 5 digit number</td>
 </tr>
 <tr>
-<td>403</td>
-<td>Forbidden &ndash; The kitten requested is hidden for administrators only</td>
+<td>pageNumber</td>
+<td>int</td>
+<td>Page number to pull from responses supplying 0 will pull all pages at once</td>
 </tr>
 <tr>
-<td>404</td>
-<td>Not Found &ndash; The specified kitten could not be found</td>
+<td>resultsPerpage</td>
+<td>int</td>
+<td>Number of results to pull into a single page of responses</td>
 </tr>
 <tr>
-<td>405</td>
-<td>Method Not Allowed &ndash; You tried to access a kitten with an invalid method</td>
+<td>filterField</td>
+<td>string</td>
+<td>Field to filter response data on. Valid values are : UniqueIdentifier, Invitee, ResponseID, Guid, RespondentGuid, StartDate</td>
 </tr>
 <tr>
-<td>406</td>
-<td>Not Acceptable &ndash; You requested a format that isn&rsquo;t json</td>
+<td>filterValue</td>
+<td>string</td>
+<td>Value to filter the FilterField on</td>
 </tr>
 <tr>
-<td>410</td>
-<td>Gone &ndash; The kitten requested has been removed from our servers</td>
+<td>sortField</td>
+<td>string</td>
+<td>Field to sort the data returned on. Valid values are : UniqueIdentifier, Invitee, ResponseID, Guid, RespondentGuid, StartDate</td>
 </tr>
 <tr>
-<td>418</td>
-<td>I&rsquo;m a teapot</td>
+<td>sortAscending</td>
+<td>bool</td>
+<td>True will sort the data ascending, false will sort the data descending</td>
 </tr>
 <tr>
-<td>429</td>
-<td>Too Many Requests &ndash; You&rsquo;re requesting too many kittens! Slow down!</td>
+<td>period</td>
+<td>int</td>
+<td>Value should be equal to 1 (Field is used internally)</td>
 </tr>
 <tr>
-<td>500</td>
-<td>Internal Server Error &ndash; We had a problem with our server. Try again later.</td>
+<td>dtStart</td>
+<td>DateTime</td>
+<td>DateTime to be used as the response Start date</td>
 </tr>
 <tr>
-<td>503</td>
-<td>Service Unavailable &ndash; We&rsquo;re temporarially offline for maintanance. Please try again later.</td>
+<td>dtEnd</td>
+<td>DateTime</td>
+<td>DateTime to be used as the response End Date</td>
+</tr>
+<tr>
+<td>DetailedReponseInfo</td>
+<td>bool</td>
+<td>True will pull detailed response information which includes response meta data</td>
+</tr>
+<tr>
+<td>DetailedUserInfo</td>
+<td>bool</td>
+<td>True will pull detailed user information such as the entire user profile of the respondents</td>
+</tr>
+<tr>
+<td>IncludeOpenEndedResults</td>
+<td>bool</td>
+<td>True will pull open ended responses. False will not include any single line or multi line questions / answers</td>
+</tr>
+<tr>
+<td>IncludeAliases</td>
+<td>bool</td>
+<td>True will replace Questions / Answers with alias values. If no alias value is present for a question it will pull the full question / answer text</td>
+</tr>
+<tr>
+<td>IncludeHiddenItems</td>
+<td>bool</td>
+<td>True will pull hidden item data collected from the &ldquo;Hidden Item Page&rdquo; of the survey</td>
+</tr>
+<tr>
+<td>IncludeIncompleteResponses</td>
+<td>bool</td>
+<td>True will pull all incomplete responses. Incomplete responses cannot be filtered on by EndDate. This means that if this is set to true, all responses will be pulled regardless of start date.</td>
+</tr>
+<tr>
+<td>StripHTMLTagsFromAnswers</td>
+<td>bool</td>
+<td>True will remove all styling and HTML code from response answers</td>
+</tr>
+<tr>
+<td>StripHTMLTagsFromQuestions</td>
+<td>bool</td>
+<td>True will remove all styling and HTML code from survey questions</td>
+</tr>
+<tr>
+<td>MergeAnswersForSelectMany</td>
+<td>bool</td>
+<td>True will return checkbox item answers in the format of A,B,C where A B C are all options for the question. False will return checkbox item answers in seperate key-value pairs.</td>
+</tr>
+<tr>
+<td>includeScoreData</td>
+<td>bool</td>
+<td>True will return detailed scoring information such as total score, score per page, and possible score per page</td>
 </tr>
 </tbody></table>
 
       </div>
       <div class="dark-box">
           <div class="lang-selector">
-                <a href="#" data-language-name="shell">shell</a>
-                <a href="#" data-language-name="ruby">ruby</a>
-                <a href="#" data-language-name="python">python</a>
+                <a href="#" data-language-name="csharp">C#</a>
+                <a href="#" data-language-name="vb">Visual Basic</a>
           </div>
       </div>
     </div>
