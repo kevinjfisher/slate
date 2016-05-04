@@ -273,7 +273,7 @@ You must replace <code>[yourdomain]</code> with the domain of your Checkbox inst
 </tr>
 </tbody></table>
 
-<h1 id="response-data">Response Data</h1>
+<h1 id="responses">Responses</h1>
 
 <p>The following service allows you to get response data from for your surveys in different formats, and with different filtering options. </p>
 
@@ -309,13 +309,14 @@ You must replace <code>[yourdomain]</code> with the domain of your Checkbox inst
 
 </code></pre>
 <pre class="highlight vb"><code><span class="k">Class</span> <span class="nc">Test</span>
-    <span class="k">Shared</span> <span class="k">Sub</span> <span class="nf">Main</span><span class="p">()</span>
-        <span class="k">Dim</span> <span class="nv">client</span> <span class="ow">As</span> <span class="n">ResponseDataServiceClient</span> <span class="o">=</span> <span class="k">New</span> <span class="n">ResponseDataServiceClient</span><span class="p">()</span>
-        <span class="c1">' Use the 'client' variable to call operations on the service.</span>
+    <span class="k">Private</span> <span class="k">Shared</span> <span class="k">Sub</span> <span class="nf">Main</span><span class="p">()</span>
+        <span class="k">Dim</span> <span class="nv">client</span> <span class="ow">As</span> <span class="k">New</span> <span class="n">ResponseDataServiceClient</span><span class="p">()</span>
 
-        <span class="k">Dim</span> <span class="nv">responseData</span> <span class="n">as</span> <span class="n">IEnumerable</span><span class="o">&lt;</span><span class="n">SimpleNameValueCollection</span><span class="o">&gt;</span> <span class="o">=</span>
-        <span class="n">client</span><span class="p">.</span><span class="n">ExportResponsesTabular</span><span class="p">(</span><span class="s">"e2e8c988-996a"</span><span class="p">,</span> <span class="mi">1001</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s">"UniqueIdentifier"</span><span class="p">,</span> <span class="s">"admin"</span><span class="p">,</span> <span class="n">null</span><span class="p">,</span>
-        <span class="n">true</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s">"2016-01-01"</span><span class="p">,</span> <span class="s">"2017-01-01"</span><span class="p">,</span><span class="n">false</span><span class="p">,</span> <span class="n">false</span><span class="p">,</span> <span class="n">false</span><span class="p">,</span> <span class="n">false</span><span class="p">,</span><span class="n">false</span><span class="p">,</span> <span class="n">false</span><span class="p">,</span> <span class="n">false</span><span class="p">,</span><span class="n">false</span><span class="p">,</span> <span class="n">false</span><span class="p">,</span> <span class="n">false</span><span class="p">)</span>
+        <span class="c1">' Use the 'client' variable to call operations on the service.</span>
+        <span class="k">Dim</span> <span class="nv">responseData</span> <span class="o">=</span> <span class="n">client</span><span class="p">.</span><span class="n">ExportResponsesTabular</span><span class="p">(</span><span class="s">"e2e8c988-996a"</span><span class="p">,</span> <span class="mi">1001</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s">"UniqueIdentifier"</span><span class="p">,</span> <span class="s">"admin"</span><span class="p">,</span> <span class="n">_</span>
+            <span class="k">Nothing</span><span class="p">,</span> <span class="k">True</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s">"2016-01-01"</span><span class="p">,</span> <span class="s">"2017-01-01"</span><span class="p">,</span> <span class="k">False</span><span class="p">,</span> <span class="n">_</span>
+            <span class="k">False</span><span class="p">,</span> <span class="k">False</span><span class="p">,</span> <span class="k">False</span><span class="p">,</span> <span class="k">False</span><span class="p">,</span> <span class="k">False</span><span class="p">,</span> <span class="k">False</span><span class="p">,</span> <span class="n">_</span>
+            <span class="k">False</span><span class="p">,</span> <span class="k">False</span><span class="p">,</span> <span class="k">False</span><span class="p">)</span>
 
         <span class="c1">' Always close the client.</span>
         <span class="n">client</span><span class="p">.</span><span class="n">Close</span><span class="p">()</span>
@@ -422,7 +423,6 @@ You must replace <code>[yourdomain]</code> with the domain of your Checkbox inst
       <span class="nt">&lt;/ExportResponsesTabularResponse&gt;</span>
    <span class="nt">&lt;/s:Body&gt;</span>
 <span class="nt">&lt;/s:Envelope&gt;</span>
-
 </code></pre>
 
 <h3 id="input-parameters">Input Parameters</h3>
@@ -540,6 +540,228 @@ You must replace <code>[yourdomain]</code> with the domain of your Checkbox inst
 <td>True will return detailed scoring information such as total score, score per page, and possible score per page</td>
 </tr>
 </tbody></table>
+
+<h1 id="surveys">Surveys</h1>
+
+<p>The following service allows you to manage and retrieve data about your surveys. </p>
+
+<p>In order to utilize this service you will need an AuthToken form the authentication service, and you will need access to the surveys you are trying to pull from Checkbox. </p>
+
+<p><code class="prettyprint">Survey Management Endpoint: https://[yourdomain]/services/surveymanagementservice.svc</code></p>
+
+<aside class="notice">
+You must replace <code>[yourdomain]</code> with the domain of your Checkbox installation.
+</aside>
+
+<h2 id="listavailablesurveys">ListAvailableSurveys</h2>
+
+<p>The ListAVailableSurveys method can be used to pull a list of all surveys that the user has access to. This method will pull any survey the user has access to, even if they just have access to complete a response for the survey. They may not have edit or management access to the surveys that are returned.</p>
+
+<blockquote>
+<p>Example Request</p>
+</blockquote>
+<pre class="highlight csharp"><code><span class="k">class</span> <span class="nc">Test</span>
+<span class="p">{</span>
+    <span class="k">static</span> <span class="k">void</span> <span class="nf">Main</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">SurveyManagementService</span> <span class="n">client</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">SurveyManagementService</span><span class="p">();</span>
+
+        <span class="c1">// Use the 'client' variable to call operations on the service.
+</span>        <span class="n">var</span> <span class="n">surveylist</span> <span class="p">=</span> <span class="nf">ListAvailableSurveys</span><span class="p">(</span><span class="n">authToken</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">100</span><span class="p">,</span> <span class="k">null</span><span class="p">,</span> <span class="k">false</span><span class="p">,</span> <span class="k">null</span><span class="p">,</span> <span class="k">null</span><span class="p">);</span>
+
+        <span class="c1">// Always close the client.
+</span>        <span class="n">client</span><span class="p">.</span><span class="nf">Close</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre>
+<pre class="highlight vb"><code><span class="k">Class</span> <span class="nc">Test</span>
+    <span class="k">Private</span> <span class="k">Shared</span> <span class="k">Sub</span> <span class="nf">Main</span><span class="p">()</span>
+        <span class="k">Dim</span> <span class="nv">client</span> <span class="ow">As</span> <span class="k">New</span> <span class="n">SurveyManagementService</span><span class="p">()</span>
+
+        <span class="c1">' Use the 'client' variable to call operations on the service.</span>
+        <span class="k">Dim</span> <span class="nv">surveylist</span> <span class="o">=</span> <span class="n">ListAvailableSurveys</span><span class="p">(</span><span class="n">authToken</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="k">Nothing</span><span class="p">,</span> <span class="k">False</span><span class="p">,</span> <span class="k">Nothing</span><span class="p">,</span> <span class="n">_</span>
+            <span class="k">Nothing</span><span class="p">)</span>
+
+        <span class="c1">' Always close the client.</span>
+        <span class="n">client</span><span class="p">.</span><span class="n">Close</span><span class="p">()</span>
+    <span class="k">End</span> <span class="k">Sub</span>
+<span class="k">End</span> <span class="k">Class</span>
+</code></pre>
+
+<blockquote>
+<p>The above request returns JSON structured like this</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">  
+   </span><span class="nt">"d"</span><span class="p">:{</span><span class="w">  
+      </span><span class="nt">"__type"</span><span class="p">:</span><span class="s2">"ServiceOperationResultOfPagedListResultOfArrayOfSurveyListItemVUqw3SxCVUqw3SxC:#Checkbox.Wcf.Services.Proxies"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"CallSuccess"</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"FailureExceptionType"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"FailureMessage"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"IsAuthenticated"</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"ResultData"</span><span class="p">:{</span><span class="w">  
+         </span><span class="nt">"__type"</span><span class="p">:</span><span class="s2">"PagedListResultOfArrayOfSurveyListItemVUqw3SxC:#Checkbox.Wcf.Services.Proxies"</span><span class="p">,</span><span class="w">
+         </span><span class="nt">"ResultPage"</span><span class="p">:[</span><span class="w">  
+            </span><span class="p">{</span><span class="w">  
+               </span><span class="nt">"__type"</span><span class="p">:</span><span class="s2">"SurveyListItem:#Checkbox.Wcf.Services.Proxies"</span><span class="p">,</span><span class="w">
+               </span><span class="nt">"ChildItems"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="w">
+               </span><span class="nt">"ChildrenCount"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+               </span><span class="nt">"CompletedResponseCount"</span><span class="p">:</span><span class="mi">-1</span><span class="p">,</span><span class="w">
+               </span><span class="nt">"Creator"</span><span class="p">:</span><span class="s2">"admin"</span><span class="p">,</span><span class="w">
+               </span><span class="nt">"ID"</span><span class="p">:</span><span class="mi">1348</span><span class="p">,</span><span class="w">
+               </span><span class="nt">"IncompleteResponseCount"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+               </span><span class="nt">"IsActive"</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="w">
+               </span><span class="nt">"LastModified"</span><span class="p">:</span><span class="s2">"\/Date(1375886208740-0400)\/"</span><span class="p">,</span><span class="w">
+               </span><span class="nt">"Name"</span><span class="p">:</span><span class="s2">"My first survey"</span><span class="p">,</span><span class="w">
+               </span><span class="nt">"SurveyGuid"</span><span class="p">:</span><span class="s2">"0837109e-9edb-433d-a62a-7794a0ed850f"</span><span class="p">,</span><span class="w">
+               </span><span class="nt">"TestResponseCount"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+               </span><span class="nt">"Type"</span><span class="p">:</span><span class="s2">"ResponseTemplate"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="p">{</span><span class="w">  
+               </span><span class="nt">"__type"</span><span class="p">:</span><span class="s2">"SurveyListItem:#Checkbox.Wcf.Services.Proxies"</span><span class="p">,</span><span class="w">
+               </span><span class="nt">"ChildItems"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="w">
+               </span><span class="nt">"ChildrenCount"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+               </span><span class="nt">"CompletedResponseCount"</span><span class="p">:</span><span class="mi">-1</span><span class="p">,</span><span class="w">
+               </span><span class="nt">"Creator"</span><span class="p">:</span><span class="s2">"admin"</span><span class="p">,</span><span class="w">
+               </span><span class="nt">"ID"</span><span class="p">:</span><span class="mi">1309</span><span class="p">,</span><span class="w">
+               </span><span class="nt">"IncompleteResponseCount"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+               </span><span class="nt">"IsActive"</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="w">
+               </span><span class="nt">"LastModified"</span><span class="p">:</span><span class="s2">"\/Date(1371126861453-0400)\/"</span><span class="p">,</span><span class="w">
+               </span><span class="nt">"Name"</span><span class="p">:</span><span class="s2">"My second survey"</span><span class="p">,</span><span class="w">
+               </span><span class="nt">"SurveyGuid"</span><span class="p">:</span><span class="s2">"0e08a4f5-a898-4f55-a069-fc1d92e4c48f"</span><span class="p">,</span><span class="w">
+               </span><span class="nt">"TestResponseCount"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+               </span><span class="nt">"Type"</span><span class="p">:</span><span class="s2">"ResponseTemplate"</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+         </span><span class="p">],</span><span class="w">
+         </span><span class="nt">"TotalItemCount"</span><span class="p">:</span><span class="mi">554</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+   </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<blockquote>
+<p>The above request returns XML structured like this</p>
+</blockquote>
+<pre class="highlight xml"><code><span class="nt">&lt;s:Envelope</span> <span class="na">xmlns:s=</span><span class="s">"http://schemas.xmlsoap.org/soap/envelope/"</span><span class="nt">&gt;</span>
+   <span class="nt">&lt;s:Body&gt;</span>
+      <span class="nt">&lt;ListAvailableSurveysResponse</span> <span class="na">xmlns=</span><span class="s">"http://tempuri.org/"</span><span class="nt">&gt;</span>
+         <span class="nt">&lt;ListAvailableSurveysResult</span> <span class="na">xmlns:a=</span><span class="s">"http://schemas.datacontract.org/2004/07/Checkbox.Wcf.Services.Proxies"</span> <span class="na">xmlns:i=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;a:CallSuccess&gt;</span>true<span class="nt">&lt;/a:CallSuccess&gt;</span>
+            <span class="nt">&lt;a:FailureExceptionType</span> <span class="na">i:nil=</span><span class="s">"true"</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;a:FailureMessage</span> <span class="na">i:nil=</span><span class="s">"true"</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;a:IsAuthenticated&gt;</span>false<span class="nt">&lt;/a:IsAuthenticated&gt;</span>
+            <span class="nt">&lt;a:ResultData&gt;</span>
+               <span class="nt">&lt;a:ResultPage&gt;</span>
+                  <span class="nt">&lt;a:SurveyListItem&gt;</span>
+                     <span class="nt">&lt;a:ChildItems</span> <span class="na">i:nil=</span><span class="s">"true"</span><span class="nt">/&gt;</span>
+                     <span class="nt">&lt;a:ChildrenCount&gt;</span>0<span class="nt">&lt;/a:ChildrenCount&gt;</span>
+                     <span class="nt">&lt;a:CompletedResponseCount&gt;</span>-1<span class="nt">&lt;/a:CompletedResponseCount&gt;</span>
+                     <span class="nt">&lt;a:Creator&gt;</span>admin<span class="nt">&lt;/a:Creator&gt;</span>
+                     <span class="nt">&lt;a:ID&gt;</span>1348<span class="nt">&lt;/a:ID&gt;</span>
+                     <span class="nt">&lt;a:IncompleteResponseCount&gt;</span>0<span class="nt">&lt;/a:IncompleteResponseCount&gt;</span>
+                     <span class="nt">&lt;a:IsActive&gt;</span>false<span class="nt">&lt;/a:IsActive&gt;</span>
+                     <span class="nt">&lt;a:LastModified&gt;</span>2013-08-07T10:36:48.74<span class="nt">&lt;/a:LastModified&gt;</span>
+                     <span class="nt">&lt;a:Name&gt;</span>My first survey<span class="nt">&lt;/a:Name&gt;</span>
+                     <span class="nt">&lt;a:SurveyGuid&gt;</span>0837109e-9edb-433d-a62a-7794a0ed850f<span class="nt">&lt;/a:SurveyGuid&gt;</span>
+                     <span class="nt">&lt;a:TestResponseCount&gt;</span>0<span class="nt">&lt;/a:TestResponseCount&gt;</span>
+                     <span class="nt">&lt;a:Type&gt;</span>ResponseTemplate<span class="nt">&lt;/a:Type&gt;</span>
+                  <span class="nt">&lt;/a:SurveyListItem&gt;</span>
+                  <span class="nt">&lt;a:SurveyListItem&gt;</span>
+                     <span class="nt">&lt;a:ChildItems</span> <span class="na">i:nil=</span><span class="s">"true"</span><span class="nt">/&gt;</span>
+                     <span class="nt">&lt;a:ChildrenCount&gt;</span>0<span class="nt">&lt;/a:ChildrenCount&gt;</span>
+                     <span class="nt">&lt;a:CompletedResponseCount&gt;</span>-1<span class="nt">&lt;/a:CompletedResponseCount&gt;</span>
+                     <span class="nt">&lt;a:Creator&gt;</span>admin<span class="nt">&lt;/a:Creator&gt;</span>
+                     <span class="nt">&lt;a:ID&gt;</span>1309<span class="nt">&lt;/a:ID&gt;</span>
+                     <span class="nt">&lt;a:IncompleteResponseCount&gt;</span>0<span class="nt">&lt;/a:IncompleteResponseCount&gt;</span>
+                     <span class="nt">&lt;a:IsActive&gt;</span>false<span class="nt">&lt;/a:IsActive&gt;</span>
+                     <span class="nt">&lt;a:LastModified&gt;</span>2013-06-13T08:34:21.453<span class="nt">&lt;/a:LastModified&gt;</span>
+                     <span class="nt">&lt;a:Name&gt;</span>My second survey<span class="nt">&lt;/a:Name&gt;</span>
+                     <span class="nt">&lt;a:SurveyGuid&gt;</span>0e08a4f5-a898-4f55-a069-fc1d92e4c48f<span class="nt">&lt;/a:SurveyGuid&gt;</span>
+                     <span class="nt">&lt;a:TestResponseCount&gt;</span>0<span class="nt">&lt;/a:TestResponseCount&gt;</span>
+                     <span class="nt">&lt;a:Type&gt;</span>ResponseTemplate<span class="nt">&lt;/a:Type&gt;</span>
+                  <span class="nt">&lt;/a:SurveyListItem&gt;</span>
+               <span class="nt">&lt;/a:ResultPage&gt;</span>
+               <span class="nt">&lt;a:TotalItemCount&gt;</span>554<span class="nt">&lt;/a:TotalItemCount&gt;</span>
+            <span class="nt">&lt;/a:ResultData&gt;</span>
+         <span class="nt">&lt;/ListAvailableSurveysResult&gt;</span>
+      <span class="nt">&lt;/ListAvailableSurveysResponse&gt;</span>
+   <span class="nt">&lt;/s:Body&gt;</span>
+<span class="nt">&lt;/s:Envelope&gt;</span>
+</code></pre>
+
+<h3 id="input-parameters">Input Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>authToken</td>
+<td>string</td>
+<td>Authentication token to validate permission over the data requested</td>
+</tr>
+<tr>
+<td>pageNumber</td>
+<td>int</td>
+<td>Page number to pull from responses supplying 0 will pull all pages at once</td>
+</tr>
+<tr>
+<td>pageSize</td>
+<td>int</td>
+<td>Number of results to pull into a single page of responses</td>
+</tr>
+<tr>
+<td>sortField</td>
+<td>string</td>
+<td>Field to sort the data returned on</td>
+</tr>
+<tr>
+<td>sortAscending</td>
+<td>bool</td>
+<td>True will sort the data ascending, false will sort the data descending</td>
+</tr>
+<tr>
+<td>filterField</td>
+<td>string</td>
+<td>Field to filter response data on</td>
+</tr>
+<tr>
+<td>filterValue</td>
+<td>string</td>
+<td>Value to filter the FilterField on</td>
+</tr>
+</tbody></table>
+
+<h2 id="listsurveysandfolders">ListSurveysAndFolders</h2>
+
+<p>Coming Soon ! </p>
+
+<h2 id="getsurveymetadata">GetSurveyMetaData</h2>
+
+<p>Coming Soon ! </p>
+
+<h2 id="getsurveyinfobyname">GetSurveyInfoByName</h2>
+
+<p>Coming Soon ! </p>
+
+<h2 id="getsurveyinfobyguid">GetSurveyInfoByGuid</h2>
+
+<p>Coming Soon ! </p>
+
+<h2 id="copysurvey">CopySurvey</h2>
+
+<p>Coming Soon ! </p>
+
+<h2 id="addfavoritesurvey">AddFavoriteSurvey</h2>
+
+<p>Coming Soon ! </p>
+
+<h1 id="users">Users</h1>
+
+<p>Coming Soon ! </p>
 
       </div>
       <div class="dark-box">
