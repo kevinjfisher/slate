@@ -129,7 +129,7 @@ End Class
 ```
 
 
-> Example Response
+> The above request returns XML structured like this
 
 ```xml
 <s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
@@ -207,7 +207,63 @@ Class Test
     End Sub
 End Class
 ```
-> Example Response
+
+>The above request returns JSON structured like this
+
+```json
+{  
+   "d":{  
+      "__type":"ServiceOperationResultOfPagedListResultOfTabularResponseExportDataVUqw3SxCVUqw3SxC:#Checkbox.Wcf.Services.Proxies",
+      "CallSuccess":true,
+      "FailureExceptionType":null,
+      "FailureMessage":null,
+      "ResultData":{  
+         "__type":"PagedListResultOfTabularResponseExportDataVUqw3SxC:#Checkbox.Wcf.Services.Proxies",
+         "ResultPage":{  
+            "__type":"TabularResponseExportData:#Checkbox.Wcf.Services.Proxies",
+            "Respondents":null,
+            "Responses":[  
+               {  
+                  "__type":"SimpleNameValueCollection:#Checkbox.Wcf.Services.Proxies",
+                  "NameValueList":[  
+                     {  
+                        "__type":"SimpleNameValue:#Checkbox.Wcf.Services.Proxies",
+                        "Name":"Id",
+                        "Value":"4393"
+                     },
+                     {  
+                        "__type":"SimpleNameValue:#Checkbox.Wcf.Services.Proxies",
+                        "Name":"What is your favorite color?",
+                        "Value":"Blue"
+                     }
+                  ]
+               },
+               {  
+                  "__type":"SimpleNameValueCollection:#Checkbox.Wcf.Services.Proxies",
+                  "NameValueList":[  
+                     {  
+                        "__type":"SimpleNameValue:#Checkbox.Wcf.Services.Proxies",
+                        "Name":"Id",
+                        "Value":"4394"
+                     },
+                     {  
+                        "__type":"SimpleNameValue:#Checkbox.Wcf.Services.Proxies",
+                        "Name":"What is your favorite color?",
+                        "Value":"Green"
+                     }
+                  ]
+               }
+            ]
+         },
+         "TotalItemCount":2
+      }
+   }
+}
+```
+
+
+
+> The above request returns XML structured like this
 
 ```xml
 <s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
