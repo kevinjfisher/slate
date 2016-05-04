@@ -162,7 +162,7 @@ The following service allows you to get response data from for your surveys in d
 
 In order to utilize this service you will need an AuthToken from the authentication service, and you will need access to the responses within the Checkbox application. 
 
-`Response Data Endpoint: https://[yourdomain]/services/responsedatanservice.svc`
+`Response Data Endpoint: https://[yourdomain]/services/responsedataservice.svc`
 
 <aside class="notice">
 You must replace <code>[yourdomain]</code> with the domain of your Checkbox installation.
