@@ -161,8 +161,7 @@ Parameter | Type | Description
 username | string | Username to obtain the authToken on behalf of
 password | string | Password used to authenticate the username supplied
 
-
-# Response Data
+# Responses
 
 The following service allows you to get response data from for your surveys in different formats, and with different filtering options. 
 
@@ -178,7 +177,7 @@ You must replace <code>[yourdomain]</code> with the domain of your Checkbox inst
 
 The ExportReponsesTabular method will return filtered or unfiltered response data in the format of an IENumerable SimpleNameValueCollection format which is easy to write to CSV files or insert into databases. The Name will always be the question or property, and the value will always be the answer or value or the field. 
 
->Example Request
+> Example Request
 
 ```csharp
 class Test
@@ -200,21 +199,22 @@ class Test
 
 ```vb
 Class Test
-    Shared Sub Main()
-        Dim client As ResponseDataServiceClient = New ResponseDataServiceClient()
-        ' Use the 'client' variable to call operations on the service.
+	Private Shared Sub Main()
+		Dim client As New ResponseDataServiceClient()
 
-        Dim responseData as IEnumerable<SimpleNameValueCollection> =
-        client.ExportResponsesTabular("e2e8c988-996a", 1001, 0, 0, "UniqueIdentifier", "admin", null,
-        true, 1, "2016-01-01", "2017-01-01",false, false, false, false,false, false, false,false, false, false)
-        
-        ' Always close the client.
-        client.Close()
-    End Sub
+		' Use the 'client' variable to call operations on the service.
+		Dim responseData = client.ExportResponsesTabular("e2e8c988-996a", 1001, 0, 0, "UniqueIdentifier", "admin", _
+			Nothing, True, 1, "2016-01-01", "2017-01-01", False, _
+			False, False, False, False, False, False, _
+			False, False, False)
+
+		' Always close the client.
+		client.Close()
+	End Sub
 End Class
 ```
 
->The above request returns JSON structured like this
+> The above request returns JSON structured like this
 
 ```json
 {  
@@ -315,7 +315,6 @@ End Class
       </ExportResponsesTabularResponse>
    </s:Body>
 </s:Envelope>
-
 ```
 
 ### Input Parameters
@@ -344,6 +343,189 @@ StripHTMLTagsFromQuestions | bool | True will remove all styling and HTML code f
 MergeAnswersForSelectMany | bool | True will return checkbox item answers in the format of A,B,C where A B C are all options for the question. False will return checkbox item answers in seperate key-value pairs. 
 includeScoreData | bool | True will return detailed scoring information such as total score, score per page, and possible score per page
 
+# Surveys
 
+The following service allows you to manage and retrieve data about your surveys. 
 
+In order to utilize this service you will need an AuthToken form the authentication service, and you will need access to the surveys you are trying to pull from Checkbox. 
+
+`Survey Management Endpoint: https://[yourdomain]/services/surveymanagementservice.svc`
+
+<aside class="notice">
+You must replace <code>[yourdomain]</code> with the domain of your Checkbox installation.
+</aside>
+
+## ListAvailableSurveys
+
+The ListAVailableSurveys method can be used to pull a list of all surveys that the user has access to. This method will pull any survey the user has access to, even if they just have access to complete a response for the survey. They may not have edit or management access to the surveys that are returned.
+
+> Example Request
+
+```csharp
+class Test
+{
+    static void Main()
+    {
+        SurveyManagementService client = new SurveyManagementService();
+
+        // Use the 'client' variable to call operations on the service.
+        var surveylist = ListAvailableSurveys(authToken, 0, 100, null, false, null, null);
+        
+        // Always close the client.
+        client.Close();
+    }
+}
+
+```
+```vb
+Class Test
+	Private Shared Sub Main()
+		Dim client As New SurveyManagementService()
+
+		' Use the 'client' variable to call operations on the service.
+		Dim surveylist = ListAvailableSurveys(authToken, 0, 100, Nothing, False, Nothing, _
+			Nothing)
+
+		' Always close the client.
+		client.Close()
+	End Sub
+End Class
+```
+> The above request returns JSON structured like this
+
+```json
+{  
+   "d":{  
+      "__type":"ServiceOperationResultOfPagedListResultOfArrayOfSurveyListItemVUqw3SxCVUqw3SxC:#Checkbox.Wcf.Services.Proxies",
+      "CallSuccess":true,
+      "FailureExceptionType":null,
+      "FailureMessage":null,
+      "IsAuthenticated":true,
+      "ResultData":{  
+         "__type":"PagedListResultOfArrayOfSurveyListItemVUqw3SxC:#Checkbox.Wcf.Services.Proxies",
+         "ResultPage":[  
+            {  
+               "__type":"SurveyListItem:#Checkbox.Wcf.Services.Proxies",
+               "ChildItems":null,
+               "ChildrenCount":0,
+               "CompletedResponseCount":-1,
+               "Creator":"admin",
+               "ID":1348,
+               "IncompleteResponseCount":0,
+               "IsActive":false,
+               "LastModified":"\/Date(1375886208740-0400)\/",
+               "Name":"My first survey",
+               "SurveyGuid":"0837109e-9edb-433d-a62a-7794a0ed850f",
+               "TestResponseCount":0,
+               "Type":"ResponseTemplate"
+            },
+            {  
+               "__type":"SurveyListItem:#Checkbox.Wcf.Services.Proxies",
+               "ChildItems":null,
+               "ChildrenCount":0,
+               "CompletedResponseCount":-1,
+               "Creator":"admin",
+               "ID":1309,
+               "IncompleteResponseCount":0,
+               "IsActive":false,
+               "LastModified":"\/Date(1371126861453-0400)\/",
+               "Name":"My second survey",
+               "SurveyGuid":"0e08a4f5-a898-4f55-a069-fc1d92e4c48f",
+               "TestResponseCount":0,
+               "Type":"ResponseTemplate"
+            }
+         ],
+         "TotalItemCount":554
+      }
+   }
+}
+```
+> The above request returns XML structured like this
+
+```xml
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
+   <s:Body>
+      <ListAvailableSurveysResponse xmlns="http://tempuri.org/">
+         <ListAvailableSurveysResult xmlns:a="http://schemas.datacontract.org/2004/07/Checkbox.Wcf.Services.Proxies" xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+            <a:CallSuccess>true</a:CallSuccess>
+            <a:FailureExceptionType i:nil="true"/>
+            <a:FailureMessage i:nil="true"/>
+            <a:IsAuthenticated>false</a:IsAuthenticated>
+            <a:ResultData>
+               <a:ResultPage>
+                  <a:SurveyListItem>
+                     <a:ChildItems i:nil="true"/>
+                     <a:ChildrenCount>0</a:ChildrenCount>
+                     <a:CompletedResponseCount>-1</a:CompletedResponseCount>
+                     <a:Creator>admin</a:Creator>
+                     <a:ID>1348</a:ID>
+                     <a:IncompleteResponseCount>0</a:IncompleteResponseCount>
+                     <a:IsActive>false</a:IsActive>
+                     <a:LastModified>2013-08-07T10:36:48.74</a:LastModified>
+                     <a:Name>My first survey</a:Name>
+                     <a:SurveyGuid>0837109e-9edb-433d-a62a-7794a0ed850f</a:SurveyGuid>
+                     <a:TestResponseCount>0</a:TestResponseCount>
+                     <a:Type>ResponseTemplate</a:Type>
+                  </a:SurveyListItem>
+                  <a:SurveyListItem>
+                     <a:ChildItems i:nil="true"/>
+                     <a:ChildrenCount>0</a:ChildrenCount>
+                     <a:CompletedResponseCount>-1</a:CompletedResponseCount>
+                     <a:Creator>admin</a:Creator>
+                     <a:ID>1309</a:ID>
+                     <a:IncompleteResponseCount>0</a:IncompleteResponseCount>
+                     <a:IsActive>false</a:IsActive>
+                     <a:LastModified>2013-06-13T08:34:21.453</a:LastModified>
+                     <a:Name>My second survey</a:Name>
+                     <a:SurveyGuid>0e08a4f5-a898-4f55-a069-fc1d92e4c48f</a:SurveyGuid>
+                     <a:TestResponseCount>0</a:TestResponseCount>
+                     <a:Type>ResponseTemplate</a:Type>
+                  </a:SurveyListItem>
+               </a:ResultPage>
+               <a:TotalItemCount>554</a:TotalItemCount>
+            </a:ResultData>
+         </ListAvailableSurveysResult>
+      </ListAvailableSurveysResponse>
+   </s:Body>
+</s:Envelope>
+```
+### Input Parameters
+
+Parameter | Type | Description
+--------- | ------- | -----------
+authToken | string | Authentication token to validate permission over the data requested
+pageNumber | int | Page number to pull from responses supplying 0 will pull all pages at once
+pageSize | int | Number of results to pull into a single page of responses
+sortField | string | Field to sort the data returned on
+sortAscending | bool | True will sort the data ascending, false will sort the data descending
+filterField | string | Field to filter response data on
+filterValue | string | Value to filter the FilterField on
+
+## ListSurveysAndFolders
+
+Coming Soon ! 
+
+## GetSurveyMetaData
+
+Coming Soon ! 
+
+## GetSurveyInfoByName
+
+Coming Soon ! 
+
+## GetSurveyInfoByGuid
+
+Coming Soon ! 
+
+## CopySurvey
+
+Coming Soon ! 
+
+## AddFavoriteSurvey
+
+Coming Soon ! 
+
+# Users
+
+Coming Soon ! 
 
