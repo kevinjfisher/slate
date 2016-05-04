@@ -6,7 +6,9 @@ language_tabs:
   - vb : Visual Basic
 
 toc_footers:
-  - <a href='https://github.com/tripit/slate'>Documentation Powered by Slate</a>
+  - <a target = "_blank" href="https://www.checkbox.com/support">Submit a support ticket</a>
+  - <a target = "_blank" href="https://www.checkbox.com/plans-and-pricing/free-trial/">Sign up for a free trial of Checkbox</a>
+  - <a target = "_blank" href='https://github.com/tripit/slate'>Documentation Powered by Slate</a>
 
 
 search: true
@@ -19,6 +21,10 @@ Welcome to the Checkbox Web Services documentation page. Here you will find some
 For ease of use this documentation should always reflect the most recent version of our Checkbox Online platform, which is currently at Checkbox 6 - 2016 Q1. If you are currently on an older version of Checkbox some or all of the documentation or examples here may not reflect your installation. 
 
 If you have any issues with the documentation or need any further assistance please feel free to submit a support ticket here : [Checkbox Support](https://www.checkbox.com/support)
+
+You can also find some code samples using the Checkbox API here : [Web Service Samples](https://github.com/PrezzaTechnologies/Developer-Samples)
+
+<aside class="warning"> This documentation page is currently in development and does not contain documentation for all of thefeatures of the Checkbox API</aside>
 
 # Getting Started
 
