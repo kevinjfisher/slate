@@ -228,7 +228,7 @@ You must replace <code>[yourdomain]</code> with the domain of your Checkbox inst
 </code></pre>
 
 <blockquote>
-<p>Example Response</p>
+<p>The above request returns XML structured like this</p>
 </blockquote>
 <pre class="highlight xml"><code><span class="nt">&lt;s:Envelope</span> <span class="na">xmlns:s=</span><span class="s">"http://schemas.xmlsoap.org/soap/envelope/"</span><span class="nt">&gt;</span>
    <span class="nt">&lt;s:Body&gt;</span>
@@ -318,7 +318,60 @@ You must replace <code>[yourdomain]</code> with the domain of your Checkbox inst
 </code></pre>
 
 <blockquote>
-<p>Example Response</p>
+<p>The above request returns JSON structured like this</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">  
+   </span><span class="nt">"d"</span><span class="p">:{</span><span class="w">  
+      </span><span class="nt">"__type"</span><span class="p">:</span><span class="s2">"ServiceOperationResultOfPagedListResultOfTabularResponseExportDataVUqw3SxCVUqw3SxC:#Checkbox.Wcf.Services.Proxies"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"CallSuccess"</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"FailureExceptionType"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"FailureMessage"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"ResultData"</span><span class="p">:{</span><span class="w">  
+         </span><span class="nt">"__type"</span><span class="p">:</span><span class="s2">"PagedListResultOfTabularResponseExportDataVUqw3SxC:#Checkbox.Wcf.Services.Proxies"</span><span class="p">,</span><span class="w">
+         </span><span class="nt">"ResultPage"</span><span class="p">:{</span><span class="w">  
+            </span><span class="nt">"__type"</span><span class="p">:</span><span class="s2">"TabularResponseExportData:#Checkbox.Wcf.Services.Proxies"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"Respondents"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"Responses"</span><span class="p">:[</span><span class="w">  
+               </span><span class="p">{</span><span class="w">  
+                  </span><span class="nt">"__type"</span><span class="p">:</span><span class="s2">"SimpleNameValueCollection:#Checkbox.Wcf.Services.Proxies"</span><span class="p">,</span><span class="w">
+                  </span><span class="nt">"NameValueList"</span><span class="p">:[</span><span class="w">  
+                     </span><span class="p">{</span><span class="w">  
+                        </span><span class="nt">"__type"</span><span class="p">:</span><span class="s2">"SimpleNameValue:#Checkbox.Wcf.Services.Proxies"</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"Name"</span><span class="p">:</span><span class="s2">"Id"</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"Value"</span><span class="p">:</span><span class="s2">"4393"</span><span class="w">
+                     </span><span class="p">},</span><span class="w">
+                     </span><span class="p">{</span><span class="w">  
+                        </span><span class="nt">"__type"</span><span class="p">:</span><span class="s2">"SimpleNameValue:#Checkbox.Wcf.Services.Proxies"</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"Name"</span><span class="p">:</span><span class="s2">"What is your favorite color?"</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"Value"</span><span class="p">:</span><span class="s2">"Blue"</span><span class="w">
+                     </span><span class="p">}</span><span class="w">
+                  </span><span class="p">]</span><span class="w">
+               </span><span class="p">},</span><span class="w">
+               </span><span class="p">{</span><span class="w">  
+                  </span><span class="nt">"__type"</span><span class="p">:</span><span class="s2">"SimpleNameValueCollection:#Checkbox.Wcf.Services.Proxies"</span><span class="p">,</span><span class="w">
+                  </span><span class="nt">"NameValueList"</span><span class="p">:[</span><span class="w">  
+                     </span><span class="p">{</span><span class="w">  
+                        </span><span class="nt">"__type"</span><span class="p">:</span><span class="s2">"SimpleNameValue:#Checkbox.Wcf.Services.Proxies"</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"Name"</span><span class="p">:</span><span class="s2">"Id"</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"Value"</span><span class="p">:</span><span class="s2">"4394"</span><span class="w">
+                     </span><span class="p">},</span><span class="w">
+                     </span><span class="p">{</span><span class="w">  
+                        </span><span class="nt">"__type"</span><span class="p">:</span><span class="s2">"SimpleNameValue:#Checkbox.Wcf.Services.Proxies"</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"Name"</span><span class="p">:</span><span class="s2">"What is your favorite color?"</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"Value"</span><span class="p">:</span><span class="s2">"Green"</span><span class="w">
+                     </span><span class="p">}</span><span class="w">
+                  </span><span class="p">]</span><span class="w">
+               </span><span class="p">}</span><span class="w">
+            </span><span class="p">]</span><span class="w">
+         </span><span class="p">},</span><span class="w">
+         </span><span class="nt">"TotalItemCount"</span><span class="p">:</span><span class="mi">2</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+   </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<blockquote>
+<p>The above request returns XML structured like this</p>
 </blockquote>
 <pre class="highlight xml"><code><span class="nt">&lt;s:Envelope</span> <span class="na">xmlns:s=</span><span class="s">"http://schemas.xmlsoap.org/soap/envelope/"</span><span class="nt">&gt;</span>
    <span class="nt">&lt;s:Body&gt;</span>
