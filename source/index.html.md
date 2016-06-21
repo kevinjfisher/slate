@@ -16,15 +16,15 @@ search: true
 
 # Introduction
 
-Welcome to the Checkbox Web Services documentation page. Here you will find some basic documentation for some of our most used API methods as well as some shot code snippets which demonstrate how to utilize the method in actual code. 
+Welcome to the Checkbox Web Services documentation page. Here you will find some basic documentation for some of our most used API methods as well as some shot code snippets which demonstrate how to utilize the method in actual code.
 
-For ease of use this documentation should always reflect the most recent version of our Checkbox Online platform, which is currently at Checkbox 6 - 2016 Q1. If you are currently on an older version of Checkbox some or all of the documentation or examples here may not reflect your installation. 
+For ease of use this documentation should always reflect the most recent version of our Checkbox Online platform, which is currently at Checkbox 6 - 2016 Q2. If you are currently on an older version of Checkbox some or all of the documentation or examples here may not reflect your installation.
 
 If you have any issues with the documentation or need any further assistance please feel free to submit a support ticket here : [Checkbox Support](https://www.checkbox.com/support)
 
 You can also find some code samples using the Checkbox API here : [Web Service Samples](https://github.com/PrezzaTechnologies/Developer-Samples)
 
-<aside class="warning"> This documentation page is currently in development and does not contain documentation for all of thefeatures of the Checkbox API</aside>
+<aside class="warning"> This documentation page is currently in development and does not contain documentation for all of the features of the Checkbox API</aside>
 
 # Getting Started
 
@@ -38,7 +38,7 @@ Each of our Web Services have a Web Services Description Language (WSDL), which 
 
 The first thing you will want to do is ensure that your Web Services are installed correctly and can be accessed by your application. The easiest way to do that is to type a service’s URL into a web browser.
 
-Let’s take a look at the User Management Service by visiting the following URL: 
+Let’s take a look at the User Management Service by visiting the following URL:
 
 http://[CHECKBOX URL]/Services/UserManagementService.svc
 
@@ -66,8 +66,17 @@ if (!result.CallSuccess)
 return result.ResultData.ResultPage;
 ```
 ```vb
+Dim proxy = New UserManagementServiceClient()
+Dim result = proxy.GetUsersInRole(authenticationToken, role, pageNumber, pageSize, sortField, sortAscending, _
+	filterField, filterValue)
 
-Unfortunately an example in Visual Basic is not complete for this section
+' Handle errors
+If Not result.CallSuccess Then
+	Console.WriteLine(result.FailureMessage)
+	Return Nothing
+End If
+
+Return result.ResultData.ResultPage
 ```
 
 Note: we are using C# and Visual Studio 2010 for this example, but you may use whatever environment or language you would like.
@@ -88,7 +97,7 @@ Note: we are using C# and Visual Studio 2010 for this example, but you may use w
 
 The Checkbox API requires an authentication token (AuthToken) in order to make API calls. In order to obtain an AuthToken you can access the AuthenticationService.Login method using your username and password. AuthTokens are on a rolling 20 minute expiration timer. This means that your token will last for 20 minutes after the last API call was made utilizing it.
 
-AuthTokens inherit the permissions of the user that they were obtained for. This means that you will be able to access all data using this token that you would if you were logged into the application as them. 
+AuthTokens inherit the permissions of the user that they were obtained for. This means that you will be able to access all data using this token that you would if you were logged into the application as them.
 
 
 `Authentication Endpoint: https://[yourdomain]/services/authenticationservice.svc`
@@ -101,7 +110,7 @@ You must replace <code>[yourdomain]</code> with the domain of your Checkbox inst
 ## Login
 
 
-The login method will take the username and password supplied, and if valid, return an authtoken. This authtoken will expire after 20 minutes of not being utilized, or if a new authtoken is requested for the user. 
+The login method will take the username and password supplied, and if valid, return an authtoken. This authtoken will expire after 20 minutes of not being utilized, or if a new authtoken is requested for the user.
 
 The authtoken assumes all permissions of the user that was authenticated in order to retrieve it.
 > Example Request
@@ -125,9 +134,9 @@ class Test
 Class Test
     Shared Sub Main()
         Dim client As AuthenticationServiceClient = New AuthenticationServiceClient()
-        
+
         Dim authToken as string = client.Login("admin", "password").ResultData
-        
+
         'Always close the client
         client.Close()
     End Sub
@@ -163,9 +172,9 @@ password | string | Password used to authenticate the username supplied
 
 # Responses
 
-The following service allows you to get response data from for your surveys in different formats, and with different filtering options. 
+The following service allows you to get response data from for your surveys in different formats, and with different filtering options.
 
-In order to utilize this service you will need an AuthToken from the authentication service, and you will need access to the responses within the Checkbox application. 
+In order to utilize this service you will need an AuthToken from the authentication service, and you will need access to the responses within the Checkbox application.
 
 `Response Data Endpoint: https://[yourdomain]/services/responsedataservice.svc`
 
@@ -175,7 +184,7 @@ You must replace <code>[yourdomain]</code> with the domain of your Checkbox inst
 
 ## ExportResponsesTabular
 
-The ExportReponsesTabular method will return filtered or unfiltered response data in the format of an IENumerable SimpleNameValueCollection format which is easy to write to CSV files or insert into databases. The Name will always be the question or property, and the value will always be the answer or value or the field. 
+The ExportReponsesTabular method will return filtered or unfiltered response data in the format of an IENumerable SimpleNameValueCollection format which is easy to write to CSV files or insert into databases. The Name will always be the question or property, and the value will always be the answer or value or the field.
 
 > Example Request
 
@@ -189,7 +198,7 @@ class Test
         // Use the 'client' variable to call operations on the service.
         var responseData = client.ExportResponsesTabular("e2e8c988-996a", 1001, 0, 0, "UniqueIdentifier", "admin", null,
         true, 1, "2016-01-01", "2017-01-01",false, false, false, false,false, false, false,false, false, false);
-        
+
         // Always close the client.
         client.Close();
     }
@@ -337,17 +346,17 @@ DetailedUserInfo | bool | True will pull detailed user information such as the e
 IncludeOpenEndedResults | bool | True will pull open ended responses. False will not include any single line or multi line questions / answers
 IncludeAliases | bool | True will replace Questions / Answers with alias values. If no alias value is present for a question it will pull the full question / answer text
 IncludeHiddenItems | bool | True will pull hidden item data collected from the "Hidden Item Page" of the survey
-IncludeIncompleteResponses | bool | True will pull all incomplete responses. Incomplete responses cannot be filtered on by EndDate. This means that if this is set to true, all responses will be pulled regardless of start date. 
+IncludeIncompleteResponses | bool | True will pull all incomplete responses. Incomplete responses cannot be filtered on by EndDate. This means that if this is set to true, all responses will be pulled regardless of start date.
 StripHTMLTagsFromAnswers | bool | True will remove all styling and HTML code from response answers
 StripHTMLTagsFromQuestions | bool | True will remove all styling and HTML code from survey questions
-MergeAnswersForSelectMany | bool | True will return checkbox item answers in the format of A,B,C where A B C are all options for the question. False will return checkbox item answers in seperate key-value pairs. 
+MergeAnswersForSelectMany | bool | True will return checkbox item answers in the format of A,B,C where A B C are all options for the question. False will return checkbox item answers in seperate key-value pairs.
 includeScoreData | bool | True will return detailed scoring information such as total score, score per page, and possible score per page
 
 # Surveys
 
-The following service allows you to manage and retrieve data about your surveys. 
+The following service allows you to manage and retrieve data about your surveys.
 
-In order to utilize this service you will need an AuthToken form the authentication service, and you will need access to the surveys you are trying to pull from Checkbox. 
+In order to utilize this service you will need an AuthToken form the authentication service, and you will need access to the surveys you are trying to pull from Checkbox.
 
 `Survey Management Endpoint: https://[yourdomain]/services/surveymanagementservice.svc`
 
@@ -369,8 +378,8 @@ class Test
         SurveyManagementService client = new SurveyManagementService();
 
         // Use the 'client' variable to call operations on the service.
-        var surveylist = ListAvailableSurveys(authToken, 0, 100, null, false, null, null);
-        
+        var surveylist = ListAvailableSurveys("e2e8c988-996a", 0, 100, null, false, null, null);
+
         // Always close the client.
         client.Close();
     }
@@ -383,7 +392,7 @@ Class Test
 		Dim client As New SurveyManagementService()
 
 		' Use the 'client' variable to call operations on the service.
-		Dim surveylist = ListAvailableSurveys(authToken, 0, 100, Nothing, False, Nothing, _
+		Dim surveylist = ListAvailableSurveys("e2e8c988-996a", 0, 100, Nothing, False, Nothing, _
 			Nothing)
 
 		' Always close the client.
@@ -503,29 +512,28 @@ filterValue | string | Value to filter the FilterField on
 
 ## ListSurveysAndFolders
 
-Coming Soon ! 
+Coming Soon !
 
 ## GetSurveyMetaData
 
-Coming Soon ! 
+Coming Soon !
 
 ## GetSurveyInfoByName
 
-Coming Soon ! 
+Coming Soon !
 
 ## GetSurveyInfoByGuid
 
-Coming Soon ! 
+Coming Soon !
 
 ## CopySurvey
 
-Coming Soon ! 
+Coming Soon !
 
 ## AddFavoriteSurvey
 
-Coming Soon ! 
+Coming Soon !
 
 # Users
 
-Coming Soon ! 
-
+Coming Soon !
